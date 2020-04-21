@@ -1661,14 +1661,14 @@ module driver
       ! Synonyms for HYCOM fields
       call NUOPC_FieldDictionarySetSyno( &
         standardNames = (/"surface_downward_eastward_stress",&
-                          "mean_zonal_moment_flx           "/), rc=rc)
+                          "mean_zonal_moment_flx_atm       "/), rc=rc)
       if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
         line=__LINE__, &
         file=__FILE__)) &
         return  ! bail out
       call NUOPC_FieldDictionarySetSyno( &
         standardNames = (/"surface_downward_northward_stress",&
-                          "mean_merid_moment_flx            "/), rc=rc)
+                          "mean_merid_moment_flx_atm        "/), rc=rc)
       if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
         line=__LINE__, &
         file=__FILE__)) &

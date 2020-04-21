@@ -44,6 +44,7 @@ module AtmInternalFields
 
   integer, parameter, public :: AtmFieldCount =  6  & !height lowest
                                               +  3  & !swd,lwd,lwup
+                                              +  1  & !net lw
                                               +  4  & !momentum,sens,lat
                                               +  4  & !vis,ir,dir,dif
                                               +  3    !ps,prec
@@ -182,6 +183,15 @@ module AtmInternalFields
     AtmBundleFields(ii)%standard_name = 'mean_up_lw_flx'
     AtmBundleFields(ii)%field_name    = 'Ulwrf'
     AtmBundleFields(ii)%file_varname  = 'ULWRF'
+    AtmBundleFields(ii)%unit_name     = 'W/m2'
+    AtmBundleFields(ii)%farrayPtr_bak => null()
+    AtmBundleFields(ii)%farrayPtr_fwd => null()
+
+    ! created from DLWRF-ULWRF in AtmForce
+    ii = ii + 1
+    AtmBundleFields(ii)%standard_name = 'mean_net_lw_flx'
+    AtmBundleFields(ii)%field_name    = 'Nlwrf'
+    AtmBundleFields(ii)%file_varname  = ' '
     AtmBundleFields(ii)%unit_name     = 'W/m2'
     AtmBundleFields(ii)%farrayPtr_bak => null()
     AtmBundleFields(ii)%farrayPtr_fwd => null()

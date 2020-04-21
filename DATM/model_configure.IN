@@ -3,8 +3,8 @@ cdate0: 2013070100
 nfhout: 6
 filename_base: gfs.
 
-dt_atmos:                   900
-atm_coupling_interval_sec:  900
+dt_atmos:                   3600
+atm_coupling_interval_sec:  3600
 
 iatm: 1536
 jatm: 768
