@@ -1,11 +1,11 @@
-cdate0: 2013070100
+cdate0: 2011100100
 
 nfhout: 6
-filename_base: gfs.
+filename_base: cfsr.
 
 dt_atmos:                   3600
 atm_coupling_interval_sec:  3600
 
-iatm: 1536
-jatm: 768
+iatm: 1760
+jatm:  880
 

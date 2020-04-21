@@ -1817,14 +1817,14 @@ module driver
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
-    call ESMF_TimeSet(startTime, yy=2013, mm=7, dd=1, h=0, m=0, &
+    call ESMF_TimeSet(startTime, yy=2011, mm=10, dd=1, h=0, m=0, &
       calkindflag=ESMF_CALKIND_GREGORIAN, rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
 
-    call ESMF_TimeSet(stopTime, yy=2013, mm=7, dd=11, h=0, m=0, &
+    call ESMF_TimeSet(stopTime, yy=2011, mm=10, dd=2, h=0, m=0, &
       calkindflag=ESMF_CALKIND_GREGORIAN, rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
