@@ -22,11 +22,10 @@ subroutine AtmGridSetUp(grid,petCnt,gridname,tag,rc)
   character(len=ESMF_MAXSTR) :: filename
   character(len=ESMF_MAXSTR) :: msgString
 
+  logical :: north_south
   integer :: i,j,lde,peX,peY,peList(2),localDECount
   integer(kind=ESMF_KIND_I4), pointer  :: i4Ptr(:,:)
   
-  integer(kind=ESMF_KIND_I4), allocatable :: cppeX(:), cppeY(:)
-
   ! gaussian grid center coords
   real(kind=ESMF_KIND_R8), allocatable :: coordXc(:),coordYc(:)
   ! gaussian grid corner coords
@@ -61,15 +60,28 @@ subroutine AtmGridSetUp(grid,petCnt,gridname,tag,rc)
                                        maxval(real(coordYc,4))
   call ESMF_LogWrite(trim(msgString), ESMF_LOGMSG_INFO, rc=rc)
 
-  ! create corner points; npole at j=1, spole at j=jatm+1
-           j = 1
-  coordYq(j) =  90.0_ESMF_KIND_R8
-           j = jatm+1
-  coordYq(j) = -90.0_ESMF_KIND_R8
+  ! find the N-S ordering of the grid
+  ! N(j=1):S(j=jatm) or S(j=1):N(j=jatm)
+  north_south = .true.
+  if(coordYc(2) .gt. coordYc(1))north_south = .false.
+
+  if(north_south)then
+   ! create corner points; npole at j=1, spole at jatm+1
+            j = 1
+   coordYq(j) =  90.0_ESMF_KIND_R8
+            j = jatm+1
+   coordYq(j) = -90.0_ESMF_KIND_R8
+  else
+   ! create corner points; spole at j=1, npole at jatm+1
+            j = 1
+   coordYq(j) = -90.0_ESMF_KIND_R8
+            j = jatm+1
+   coordYq(j) =  90.0_ESMF_KIND_R8
+  endif
   do j = 2,jatm
    coordYq(j) = (coordYc(j-1) + coordYc(j))*0.5_ESMF_KIND_R8
   enddo
-   
+ 
   ! like module_CPLFIELDS.F90 in GSM
   do i = 1,iatm
    coordXq(i) = 360.0_ESMF_KIND_R8/real(iatm) * (real(i) - 1.5_ESMF_KIND_R8)
@@ -222,7 +234,6 @@ subroutine AtmGridSetUp(grid,petCnt,gridname,tag,rc)
   deallocate(coordYc); deallocate(coordYq)
   deallocate(landsfc)
 
-  !deallocate(cppeX); deallocate(cppeY)
   call ESMF_LogWrite("User AtmGridSetUp routine ended", ESMF_LOGMSG_INFO)
 
 end subroutine AtmGridSetUp
