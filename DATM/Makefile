@@ -51,11 +51,11 @@ esmApp.o: Driver.o
 Driver.o: datm.o 
 
 datm.o: AtmExportFields.o AtmModel.o AtmFieldUtils.o AtmGridSetUp.o
-AtmModel.o: AtmForce.o AtmBundleCreate.o AtmFieldUtils.o
+AtmModel.o: AtmForce.o AtmBundleCreate.o AtmFieldUtils.o 
 AtmForce.o: AtmExportFields.o
 AtmGridSetUp.o: AtmExportFields.o AtmGridUtils.o
 AtmBundleCreate.o : AtmInternalFields.o
-AtmFieldUtils.o : AtmInternalFields.o AtmExportFields.o 
+AtmFieldUtils.o : AtmInternalFields.o AtmExportFields.o
 AtmExportFields.o : AtmInternalFields.o
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------

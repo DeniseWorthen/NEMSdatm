@@ -10,6 +10,7 @@ module driver
 
   use ESMF
   use NUOPC
+  use AtmInternalFields, only : ChkErr
 
   use NUOPC_Driver, &
     driver_routine_SS             => SetServices, &
@@ -21,7 +22,10 @@ module driver
   use NUOPC_Connector, only: cplSS => SetServices
  
   implicit none
-  
+ 
+  character(len=*),parameter :: u_FILE_u = &
+     __FILE__
+ 
   private
   
   public SetServices
@@ -37,18 +41,13 @@ module driver
     
     ! NUOPC_Driver registers the generic methods
     call NUOPC_CompDerive(driver, driver_routine_SS, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
+
       
     ! attach specializing method(s)
     call NUOPC_CompSpecialize(driver, specLabel=driver_label_SetModelServices, &
       specRoutine=SetModelServices, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     
 #ifdef test
     ! set the src and dst masks for the regrids
@@ -95,10 +94,7 @@ module driver
           standardName="air_density_height_lowest", &
           canonicalUnits="kg m-3", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_zonal_moment_flx_atm")) then
@@ -106,10 +102,7 @@ module driver
           standardName="mean_zonal_moment_flx_atm", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_merid_moment_flx_atm")) then
@@ -117,10 +110,7 @@ module driver
           standardName="mean_merid_moment_flx_atm", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_sensi_heat_flx")) then
@@ -128,10 +118,7 @@ module driver
           standardName="mean_sensi_heat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_sensi_heat_flx_atm_into_ice")) then
@@ -139,10 +126,7 @@ module driver
           standardName="mean_sensi_heat_flx_atm_into_ice", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_sensi_heat_flx_atm_into_ocn")) then
@@ -150,10 +134,7 @@ module driver
           standardName="mean_sensi_heat_flx_atm_into_ocn", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_laten_heat_flx")) then
@@ -161,10 +142,7 @@ module driver
           standardName="mean_laten_heat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_laten_heat_flx_atm_into_ice")) then
@@ -172,10 +150,7 @@ module driver
           standardName="mean_laten_heat_flx_atm_into_ice", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_laten_heat_flx_atm_into_ocn")) then
@@ -183,10 +158,7 @@ module driver
           standardName="mean_laten_heat_flx_atm_into_ocn", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_down_lw_flx")) then
@@ -194,10 +166,7 @@ module driver
           standardName="mean_down_lw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_down_sw_flx")) then
@@ -205,10 +174,7 @@ module driver
           standardName="mean_down_sw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_fprec_rate")) then
@@ -216,10 +182,7 @@ module driver
           standardName="mean_fprec_rate", &
           canonicalUnits="kg s m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_prec_rate")) then
@@ -227,10 +190,7 @@ module driver
           standardName="mean_prec_rate", &
           canonicalUnits="kg s m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_evap_rate")) then
@@ -238,10 +198,7 @@ module driver
           standardName="mean_evap_rate", &
           canonicalUnits="kg s m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_evap_rate_atm_into_ice")) then
@@ -249,10 +206,7 @@ module driver
           standardName="mean_evap_rate_atm_into_ice", &
           canonicalUnits="kg s m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "mean_evap_rate_atm_into_ocn")) then
@@ -260,10 +214,7 @@ module driver
           standardName="mean_evap_rate_atm_into_ocn", &
           canonicalUnits="kg s m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_zonal_moment_flx")) then
@@ -271,10 +222,7 @@ module driver
           standardName="inst_zonal_moment_flx", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_merid_moment_flx")) then
@@ -282,10 +230,7 @@ module driver
           standardName="inst_merid_moment_flx", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_sensi_heat_flx")) then
@@ -293,10 +238,7 @@ module driver
           standardName="inst_sensi_heat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_laten_heat_flx")) then
@@ -304,10 +246,7 @@ module driver
           standardName="inst_laten_heat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_down_lw_flx")) then
@@ -315,10 +254,7 @@ module driver
           standardName="inst_down_lw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_down_sw_flx")) then
@@ -326,10 +262,7 @@ module driver
           standardName="inst_down_sw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_temp_height2m")) then
@@ -337,10 +270,7 @@ module driver
           standardName="inst_temp_height2m", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_spec_humid_height2m")) then
@@ -348,10 +278,7 @@ module driver
           standardName="inst_spec_humid_height2m", &
           canonicalUnits="kg kg-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_u_wind_height10m")) then
@@ -359,10 +286,7 @@ module driver
           standardName="inst_u_wind_height10m", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_v_wind_height10m")) then
@@ -370,10 +294,7 @@ module driver
           standardName="inst_v_wind_height10m", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_zonal_wind_height10m")) then
@@ -381,10 +302,7 @@ module driver
           standardName="inst_zonal_wind_height10m", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_merid_wind_height10m")) then
@@ -392,10 +310,7 @@ module driver
           standardName="inst_merid_wind_height10m", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_temp_height_surface")) then
@@ -403,10 +318,7 @@ module driver
           standardName="inst_temp_height_surface", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_pres_height_surface")) then
@@ -414,10 +326,7 @@ module driver
           standardName="inst_pres_height_surface", &
           canonicalUnits="Pa", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not.NUOPC_FieldDictionaryHasEntry( &
         "inst_surface_height")) then
@@ -425,10 +334,7 @@ module driver
           standardName="inst_surface_height", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       ! -> Additional fields identified as needed by MOM5 and others...
       if (.not. NUOPC_FieldDictionaryHasEntry( &
@@ -437,10 +343,7 @@ module driver
           standardName="mean_down_sw_vis_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_down_sw_vis_dif_flx")) then
@@ -448,10 +351,7 @@ module driver
           standardName="mean_down_sw_vis_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_down_sw_ir_dir_flx")) then
@@ -459,10 +359,7 @@ module driver
           standardName="mean_down_sw_ir_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_down_sw_ir_dif_flx")) then
@@ -470,10 +367,7 @@ module driver
           standardName="mean_down_sw_ir_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_down_sw_vis_dir_flx")) then
@@ -481,10 +375,7 @@ module driver
           standardName="inst_down_sw_vis_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_down_sw_vis_dif_flx")) then
@@ -492,10 +383,7 @@ module driver
           standardName="inst_down_sw_vis_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_down_sw_ir_dir_flx")) then
@@ -503,10 +391,7 @@ module driver
           standardName="inst_down_sw_ir_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_down_sw_ir_dif_flx")) then
@@ -514,10 +399,7 @@ module driver
           standardName="inst_down_sw_ir_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_net_sw_vis_dir_flx")) then
@@ -525,10 +407,7 @@ module driver
           standardName="mean_net_sw_vis_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_net_sw_vis_dif_flx")) then
@@ -536,10 +415,7 @@ module driver
           standardName="mean_net_sw_vis_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_net_sw_ir_dir_flx")) then
@@ -547,10 +423,7 @@ module driver
           standardName="mean_net_sw_ir_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_net_sw_ir_dif_flx")) then
@@ -558,10 +431,7 @@ module driver
           standardName="mean_net_sw_ir_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_net_sw_vis_dir_flx")) then
@@ -569,10 +439,7 @@ module driver
           standardName="inst_net_sw_vis_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_net_sw_vis_dif_flx")) then
@@ -580,10 +447,7 @@ module driver
           standardName="inst_net_sw_vis_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_net_sw_ir_dir_flx")) then
@@ -591,10 +455,7 @@ module driver
           standardName="inst_net_sw_ir_dir_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_net_sw_ir_dif_flx")) then
@@ -602,10 +463,7 @@ module driver
           standardName="inst_net_sw_ir_dif_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_salt_rate")) then
@@ -613,10 +471,7 @@ module driver
           standardName="mean_salt_rate", &
           canonicalUnits="kg psu m-2 s", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_runoff_rate")) then
@@ -624,10 +479,7 @@ module driver
           standardName="mean_runoff_rate", &
           canonicalUnits="kg m-2 s", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_calving_rate")) then
@@ -635,10 +487,7 @@ module driver
           standardName="mean_calving_rate", &
           canonicalUnits="kg m-2 s", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_runoff_heat_flx")) then
@@ -646,10 +495,7 @@ module driver
           standardName="mean_runoff_heat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry(  &
         "mean_calving_heat_flx")) then
@@ -657,10 +503,7 @@ module driver
           standardName="mean_calving_heat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ice_fraction")) then
@@ -668,10 +511,7 @@ module driver
           standardName="ice_fraction", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_sw_pen_to_ocn")) then
@@ -679,10 +519,7 @@ module driver
           standardName="mean_sw_pen_to_ocn", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_up_lw_flx")) then
@@ -690,10 +527,7 @@ module driver
           standardName="mean_up_lw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mass_of_overlying_sea_ice")) then
@@ -701,10 +535,7 @@ module driver
           standardName="mass_of_overlying_sea_ice", &
           canonicalUnits="kg", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "s_surf")) then
@@ -712,10 +543,7 @@ module driver
           standardName="s_surf", &
           canonicalUnits="psu", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "freezing_melting_potential")) then
@@ -723,10 +551,7 @@ module driver
           standardName="freezing_melting_potential", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "u_surf")) then
@@ -734,10 +559,7 @@ module driver
           standardName="u_surf", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "v_surf")) then
@@ -745,10 +567,7 @@ module driver
           standardName="v_surf", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_lev")) then
@@ -756,10 +575,7 @@ module driver
           standardName="sea_lev", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "wind_stress_zonal")) then
@@ -767,10 +583,7 @@ module driver
           standardName="wind_stress_zonal", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "wind_stress_merid")) then
@@ -778,10 +591,7 @@ module driver
           standardName="wind_stress_merid", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ocn_current_zonal")) then
@@ -789,10 +599,7 @@ module driver
           standardName="ocn_current_zonal", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ocn_current_merid")) then
@@ -800,10 +607,7 @@ module driver
           standardName="ocn_current_merid", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ocn_current_idir")) then
@@ -811,10 +615,7 @@ module driver
           standardName="ocn_current_idir", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ocn_current_jdir")) then
@@ -822,10 +623,7 @@ module driver
           standardName="ocn_current_jdir", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_surface_slope_zonal")) then
@@ -833,10 +631,7 @@ module driver
           standardName="sea_surface_slope_zonal", &
           canonicalUnits="m m-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_surface_slope_merid")) then
@@ -844,10 +639,7 @@ module driver
           standardName="sea_surface_slope_merid", &
           canonicalUnits="m m-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_surface_slope_zonal")) then
@@ -855,10 +647,7 @@ module driver
           standardName="sea_surface_slope_zonal", &
           canonicalUnits="m m-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_surface_slope_merid")) then
@@ -866,10 +655,7 @@ module driver
           standardName="sea_surface_slope_merid", &
           canonicalUnits="m m-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_air_ice_zonal")) then
@@ -877,10 +663,7 @@ module driver
           standardName="stress_on_air_ice_zonal", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_air_ice_merid")) then
@@ -888,10 +671,7 @@ module driver
           standardName="stress_on_air_ice_merid", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_air_ocn_zonal")) then
@@ -899,10 +679,7 @@ module driver
           standardName="stress_on_air_ocn_zonal", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_air_ocn_merid")) then
@@ -910,10 +687,7 @@ module driver
           standardName="stress_on_air_ocn_merid", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_ocn_ice_zonal")) then
@@ -921,10 +695,7 @@ module driver
           standardName="stress_on_ocn_ice_zonal", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_ocn_ice_merid")) then
@@ -932,10 +703,7 @@ module driver
           standardName="stress_on_ocn_ice_merid", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_ocn_ice_idir")) then
@@ -943,10 +711,7 @@ module driver
           standardName="stress_on_ocn_ice_idir", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "stress_on_ocn_ice_jdir")) then
@@ -954,10 +719,7 @@ module driver
           standardName="stress_on_ocn_ice_jdir", &
           canonicalUnits="N m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mixed_layer_depth")) then
@@ -965,10 +727,7 @@ module driver
           standardName="mixed_layer_depth", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_net_lw_flx")) then
@@ -976,10 +735,7 @@ module driver
           standardName="mean_net_lw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_net_sw_flx")) then
@@ -987,10 +743,7 @@ module driver
           standardName="mean_net_sw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_up_lw_flx_ice")) then
@@ -998,10 +751,7 @@ module driver
           standardName="mean_up_lw_flx_ice", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_up_lw_flx_ocn")) then
@@ -1009,10 +759,7 @@ module driver
           standardName="mean_up_lw_flx_ocn", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_net_lw_flx")) then
@@ -1020,10 +767,7 @@ module driver
           standardName="inst_net_lw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_net_sw_flx")) then
@@ -1031,10 +775,7 @@ module driver
           standardName="inst_net_sw_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ir_dir_albedo")) then
@@ -1042,10 +783,7 @@ module driver
           standardName="inst_ir_dir_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ir_dif_albedo")) then
@@ -1053,10 +791,7 @@ module driver
           standardName="inst_ir_dif_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_vis_dir_albedo")) then
@@ -1064,10 +799,7 @@ module driver
           standardName="inst_vis_dir_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_vis_dif_albedo")) then
@@ -1075,10 +807,7 @@ module driver
           standardName="inst_vis_dif_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ocn_ir_dir_albedo")) then
@@ -1086,10 +815,7 @@ module driver
           standardName="inst_ocn_ir_dir_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ocn_ir_dif_albedo")) then
@@ -1097,10 +823,7 @@ module driver
           standardName="inst_ocn_ir_dif_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ocn_vis_dir_albedo")) then
@@ -1108,10 +831,7 @@ module driver
           standardName="inst_ocn_vis_dir_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ocn_vis_dif_albedo")) then
@@ -1119,10 +839,7 @@ module driver
           standardName="inst_ocn_vis_dif_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ice_ir_dir_albedo")) then
@@ -1130,10 +847,7 @@ module driver
           standardName="inst_ice_ir_dir_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ice_ir_dif_albedo")) then
@@ -1141,10 +855,7 @@ module driver
           standardName="inst_ice_ir_dif_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ice_vis_dir_albedo")) then
@@ -1152,10 +863,7 @@ module driver
           standardName="inst_ice_vis_dir_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_ice_vis_dif_albedo")) then
@@ -1163,10 +871,7 @@ module driver
           standardName="inst_ice_vis_dif_albedo", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_land_sea_mask")) then
@@ -1174,10 +879,7 @@ module driver
           standardName="inst_land_sea_mask", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_temp_height_lowest")) then
@@ -1185,10 +887,7 @@ module driver
           standardName="inst_temp_height_lowest", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_spec_humid_height_lowest")) then
@@ -1196,10 +895,7 @@ module driver
           standardName="inst_spec_humid_height_lowest", &
           canonicalUnits="kg kg-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "humidity_2m")) then
@@ -1207,10 +903,7 @@ module driver
           standardName="humidity_2m", &
           canonicalUnits="kg kg-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_zonal_wind_height_lowest")) then
@@ -1218,10 +911,7 @@ module driver
           standardName="inst_zonal_wind_height_lowest", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_merid_wind_height_lowest")) then
@@ -1229,10 +919,7 @@ module driver
           standardName="inst_merid_wind_height_lowest", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_pres_height_lowest")) then
@@ -1240,10 +927,7 @@ module driver
           standardName="inst_pres_height_lowest", &
           canonicalUnits="Pa", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "inst_height_lowest")) then
@@ -1251,10 +935,7 @@ module driver
           standardName="inst_height_lowest", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ocean_mask")) then
@@ -1262,10 +943,7 @@ module driver
           standardName="ocean_mask", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "icemask")) then
@@ -1273,10 +951,7 @@ module driver
           standardName="icemask", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "land_mask")) then
@@ -1284,10 +959,7 @@ module driver
           standardName="land_mask", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       ! special HYCOM exports
       if (.not. NUOPC_FieldDictionaryHasEntry( &
@@ -1296,10 +968,7 @@ module driver
           standardName="surface_downward_eastward_stress", &
           canonicalUnits="Pa", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "surface_downward_northward_stress")) then
@@ -1307,10 +976,7 @@ module driver
           standardName="surface_downward_northward_stress", &
           canonicalUnits="Pa", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "wind_speed_height10m")) then
@@ -1318,10 +984,7 @@ module driver
           standardName="wind_speed_height10m", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "wind_speed_squared_10m")) then
@@ -1329,10 +992,7 @@ module driver
           standardName="wind_speed_squared_10m", &
           canonicalUnits="m2 s-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "friction_speed")) then
@@ -1340,10 +1000,7 @@ module driver
           standardName="friction_speed", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_lat_flx")) then
@@ -1351,10 +1008,7 @@ module driver
           standardName="mean_lat_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_sens_flx")) then
@@ -1362,10 +1016,7 @@ module driver
           standardName="mean_sens_flx", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "water_flux_into_sea_water")) then
@@ -1373,10 +1024,7 @@ module driver
           standardName="water_flux_into_sea_water", &
           canonicalUnits="kg m-2 s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "frozen_water_flux_into_sea_water")) then
@@ -1384,10 +1032,7 @@ module driver
           standardName="frozen_water_flux_into_sea_water", &
           canonicalUnits="kg m-2 s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "surface_temperature")) then
@@ -1395,10 +1040,7 @@ module driver
           standardName="surface_temperature", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "air_surface_temperature")) then
@@ -1406,10 +1048,7 @@ module driver
           standardName="air_surface_temperature", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "temperature_2m")) then
@@ -1417,10 +1056,7 @@ module driver
           standardName="temperature_2m", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "upward_sea_ice_basal_available_heat_flux")) then
@@ -1428,10 +1064,7 @@ module driver
           standardName="upward_sea_ice_basal_available_heat_flux", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       ! special HYCOM imports
       if (.not. NUOPC_FieldDictionaryHasEntry( &
@@ -1440,10 +1073,7 @@ module driver
           standardName="sea_ice_area_fraction", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "downward_x_stress_at_sea_ice_base")) then
@@ -1451,10 +1081,7 @@ module driver
           standardName="downward_x_stress_at_sea_ice_base", &
           canonicalUnits="Pa", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "downward_y_stress_at_sea_ice_base")) then
@@ -1462,10 +1089,7 @@ module driver
           standardName="downward_y_stress_at_sea_ice_base", &
           canonicalUnits="Pa", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "downward_sea_ice_basal_solar_heat_flux")) then
@@ -1473,10 +1097,7 @@ module driver
           standardName="downward_sea_ice_basal_solar_heat_flux", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "upward_sea_ice_basal_heat_flux")) then
@@ -1484,10 +1105,7 @@ module driver
           standardName="upward_sea_ice_basal_heat_flux", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "downward_sea_ice_basal_salt_flux")) then
@@ -1495,10 +1113,7 @@ module driver
           standardName="downward_sea_ice_basal_salt_flux", &
           canonicalUnits="kg m-2 s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "downward_sea_ice_basal_water_flux")) then
@@ -1506,10 +1121,7 @@ module driver
           standardName="downward_sea_ice_basal_water_flux", &
           canonicalUnits="kg m-2 s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_ice_temperature")) then
@@ -1517,10 +1129,7 @@ module driver
           standardName="sea_ice_temperature", &
           canonicalUnits="K", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_ice_thickness")) then
@@ -1528,10 +1137,7 @@ module driver
           standardName="sea_ice_thickness", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_ice_x_velocity")) then
@@ -1539,10 +1145,7 @@ module driver
           standardName="sea_ice_x_velocity", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_ice_y_velocity")) then
@@ -1550,10 +1153,7 @@ module driver
           standardName="sea_ice_y_velocity", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
@@ -1562,10 +1162,7 @@ module driver
           standardName="sea_ice_velocity_zonal", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "sea_ice_velocity_merid")) then
@@ -1573,10 +1170,7 @@ module driver
           standardName="sea_ice_velocity_merid", &
           canonicalUnits="m s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
 
       if (.not. NUOPC_FieldDictionaryHasEntry( &
@@ -1585,10 +1179,7 @@ module driver
           standardName="net_heat_flx_to_ocn", &
           canonicalUnits="W m-2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_fresh_water_to_ocean_rate")) then
@@ -1596,10 +1187,7 @@ module driver
           standardName="mean_fresh_water_to_ocean_rate", &
           canonicalUnits="kg m-2 s-1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_ice_volume")) then
@@ -1607,10 +1195,7 @@ module driver
           standardName="mean_ice_volume", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "mean_snow_volume")) then
@@ -1618,10 +1203,7 @@ module driver
           standardName="mean_snow_volume", &
           canonicalUnits="m", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
 
       ! special ProtoKiss exports
@@ -1631,10 +1213,7 @@ module driver
           standardName="total_surface_heat_flux_ice_to_ocean", &
           canonicalUnits="W/m2", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "total_surface_heat_salt_flux_ice_to_ocean")) then
@@ -1642,10 +1221,7 @@ module driver
           standardName="total_surface_salt_flux_ice_to_ocean", &
           canonicalUnits="ppt m/s", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       if (.not. NUOPC_FieldDictionaryHasEntry( &
         "ice_mask")) then
@@ -1653,40 +1229,25 @@ module driver
           standardName="ice_mask", &
           canonicalUnits="1", &
           rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       endif
       ! Synonyms for HYCOM fields
       call NUOPC_FieldDictionarySetSyno( &
         standardNames = (/"surface_downward_eastward_stress",&
                           "mean_zonal_moment_flx_atm       "/), rc=rc)
-      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       call NUOPC_FieldDictionarySetSyno( &
         standardNames = (/"surface_downward_northward_stress",&
                           "mean_merid_moment_flx_atm        "/), rc=rc)
-      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       call NUOPC_FieldDictionarySetSyno( &
         standardNames = (/"mean_lat_flx       ",&
                           "mean_laten_heat_flx"/), rc=rc)
-      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
       call NUOPC_FieldDictionarySetSyno( &
         standardNames = (/"mean_sens_flx      ",&
                           "mean_sensi_heat_flx"/), rc=rc)
-      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
   call ESMF_LogWrite("User initialize routine driver setservices finished", ESMF_LOGMSG_INFO)
 
@@ -1713,98 +1274,56 @@ module driver
     call NUOPC_DriverAddComp(driver, "ATM", atmSS, &
                              comp=child, &
                              rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(child, name="Verbosity", value="max", rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 #ifdef test
      
     ! SetServices for atm2ocn
     call NUOPC_DriverAddComp(driver, srcCompLabel="ATM", dstCompLabel="OCN", &
       compSetServicesRoutine=cplSS, comp=connector, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(connector, name="Verbosity", value="max", &
       rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     ! SetServices for atm2ice
     call NUOPC_DriverAddComp(driver, srcCompLabel="ATM", dstCompLabel="ICE", &
       compSetServicesRoutine=cplSS, comp=connector, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(connector, name="Verbosity", value="max", rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     ! SetServices for ocn2atm
     call NUOPC_DriverAddComp(driver, srcCompLabel="OCN", dstCompLabel="ATM", &
       compSetServicesRoutine=cplSS, comp=connector, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(connector, name="Verbosity", value="max", &
       rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     ! SetServices for ocn2ice
     call NUOPC_DriverAddComp(driver, srcCompLabel="OCN", dstCompLabel="ICE", &
       compSetServicesRoutine=cplSS, comp=connector, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(connector, name="Verbosity", value="max", &
       rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     ! SetServices for ice2atm
     call NUOPC_DriverAddComp(driver, srcCompLabel="ICE", dstCompLabel="ATM", &
       compSetServicesRoutine=cplSS, comp=connector, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(connector, name="Verbosity", value="max", &
       rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
  
     ! SetServices for ice2ocn
     call NUOPC_DriverAddComp(driver, srcCompLabel="ICE", dstCompLabel="OCN", &
       compSetServicesRoutine=cplSS, comp=connector, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call NUOPC_CompAttributeSet(connector, name="Verbosity", value="max", &
       rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 #endif
 
     ! set the model clock
@@ -1813,36 +1332,21 @@ module driver
     !call ESMF_TimeIntervalSet(timeStep, s=1800, rc=rc) ! 30 min steps
     call ESMF_TimeIntervalSet(timeStep, s=900, rc=rc) ! 15 min steps
     !call ESMF_TimeIntervalSet(timeStep, s=450, rc=rc) ! 7.5 min steps
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call ESMF_TimeSet(startTime, yy=2011, mm=10, dd=1, h=0, m=0, &
       calkindflag=ESMF_CALKIND_GREGORIAN, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     call ESMF_TimeSet(stopTime, yy=2011, mm=10, dd=2, h=0, m=0, &
       calkindflag=ESMF_CALKIND_GREGORIAN, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     internalClock = ESMF_ClockCreate(name="Application Clock", &
       timeStep=timeStep, startTime=startTime, stopTime=stopTime, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
       
     call ESMF_GridCompSet(driver, clock=internalClock, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     call ESMF_TimePrint(startTime, options='string', &
                         preString='start time: ',rc=rc)
@@ -1960,22 +1464,16 @@ module driver
     call ESMF_GridCompGet(driver, vm=vm, rc=rc)
     call ESMF_VMGet(vm,petCount=petCnt,localPet=lPet,rc=rc)
 
-    call ESMF_LogWrite("Driver is in ModifyCplLists()", ESMF_LOGMSG_INFO, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    call ESMF_LogWrite("Driver is in ModifyCplLists()", ESMF_LOGMSG_INFO)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     
     nullify(connectorList)
     call NUOPC_DriverGetComp(driver, compList=connectorList, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
  
     write (msg,*) "Found ", size(connectorList), " Connectors."// &
       " Modifying CplList Attribute...."
-    call ESMF_LogWrite(trim(msg), ESMF_LOGMSG_INFO, rc=rc)
+    call ESMF_LogWrite(trim(msg), ESMF_LOGMSG_INFO)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
@@ -1984,25 +1482,16 @@ module driver
     do i = 1, size(connectorList)
       ! query Connector i for its name
       call ESMF_CplCompGet(connectorList(i), name=astring, rc=rc)
-      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
+      if (ChkErr(rc,__LINE__,u_FILE_u)) return
       ! query the cplList for connector i
       call NUOPC_CompAttributeGet(connectorList(i), name="CplList", &
         itemCount=cplListSize, rc=rc)
-      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
+      if (ChkErr(rc,__LINE__,u_FILE_u)) return
       if (cplListSize>0) then
         allocate(cplList(cplListSize))
         call NUOPC_CompAttributeGet(connectorList(i), name="CplList", &
           valueList=cplList, rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
         ! go through all of the entries in the cplList
         ! could use name (astring) to set different behaviours for different
         ! connectors
@@ -2031,10 +1520,7 @@ module driver
         ! store the modified cplList in CplList attribute of connector i
         call NUOPC_CompAttributeSet(connectorList(i), &
           name="CplList", valueList=cplList, rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-          line=__LINE__, &
-          file=__FILE__)) &
-          return  ! bail out
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
         deallocate(cplList)
       endif
     enddo
