@@ -107,6 +107,7 @@ subroutine AtmForce(gcomp,exportState,externalClock,initmode,rc)
   enddo
 
   ! Check for fields which are not Present but are needed
+  ! Not very clean---would have been better to create this field in the forcing file
   nfields = size(AtmBundleFields)
   do ii = 1,nfields
    if(.not.AtmBundleFields(ii)%isPresent)then
