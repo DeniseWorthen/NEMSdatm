@@ -17,32 +17,32 @@ module AtmExportFields
   ! in Atm exportState
   !-----------------------------------------------------------------------------
 
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dusfc
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dvsfc
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dusfc
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dvsfc
 
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: zlowest
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: tlowest
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: qlowest
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: ulowest
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: vlowest
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: plowest
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: zlowest
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: tlowest
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: qlowest
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: ulowest
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: vlowest
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: plowest
 
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dswrf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dlwrf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: ulwrf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: nlwrf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dswrf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: dlwrf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: ulwrf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: nlwrf
 
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: lhtfl
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: shtfl
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: lhtfl
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: shtfl
 
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: vbdsf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: vddsf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: nbdsf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: nddsf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: vbdsf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: vddsf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: nbdsf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: nddsf
 
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: psurf
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: prate
-  real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: snwrate
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: psurf
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: prate
+  !real(kind=ESMF_KIND_R8), dimension(:,:), public, pointer :: snwrate
 
   ! called by Cap
   public :: AtmExportFieldsSetUp
@@ -69,14 +69,16 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Dusfc'
     AtmFieldsToExport(ii)%file_varname  = 'dusfc'
     AtmFieldsToExport(ii)%unit_name     = 'N/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => dusfc
+    !AtmFieldsToExport(ii)%farrayPtr     => dusfc
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_merid_moment_flx_atm'
     AtmFieldsToExport(ii)%field_name    = 'Dvsfc'
     AtmFieldsToExport(ii)%file_varname  = 'dvsfc'
     AtmFieldsToExport(ii)%unit_name     = 'N/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => dvsfc
+    !AtmFieldsToExport(ii)%farrayPtr     => dvsfc
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
   !-----------------------------------------------------------------------------
   !
@@ -87,42 +89,48 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Zlowest'
     AtmFieldsToExport(ii)%file_varname  = 'hgt_hyblev1'
     AtmFieldsToExport(ii)%unit_name     = 'K'
-    AtmFieldsToExport(ii)%farrayPtr     => zlowest
+    !AtmFieldsToExport(ii)%farrayPtr     => zlowest
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'inst_temp_height_lowest'
     AtmFieldsToExport(ii)%field_name    = 'Tlowest'
     AtmFieldsToExport(ii)%file_varname  = 'tmp_hyblev1'
     AtmFieldsToExport(ii)%unit_name     = 'K'
-    AtmFieldsToExport(ii)%farrayPtr     => tlowest
+    !AtmFieldsToExport(ii)%farrayPtr     => tlowest
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'inst_spec_humid_height_lowest'
     AtmFieldsToExport(ii)%field_name    = 'Qlowest'
     AtmFieldsToExport(ii)%file_varname  = 'spfh_hyblev1'
     AtmFieldsToExport(ii)%unit_name     = 'kg/kg'
-    AtmFieldsToExport(ii)%farrayPtr     => qlowest
+    !AtmFieldsToExport(ii)%farrayPtr     => qlowest
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'inst_zonal_wind_height_lowest'
     AtmFieldsToExport(ii)%field_name    = 'Ulowest'
     AtmFieldsToExport(ii)%file_varname  = 'ugrd_hyblev1'
     AtmFieldsToExport(ii)%unit_name     = 'm/s'
-    AtmFieldsToExport(ii)%farrayPtr     => ulowest
+    !AtmFieldsToExport(ii)%farrayPtr     => ulowest
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'inst_merid_wind_height_lowest'
     AtmFieldsToExport(ii)%field_name    = 'Vlowest'
     AtmFieldsToExport(ii)%file_varname  = 'vgrd_hyblev1'
     AtmFieldsToExport(ii)%unit_name     = 'm/s'
-    AtmFieldsToExport(ii)%farrayPtr     => vlowest
+    !AtmFieldsToExport(ii)%farrayPtr     => vlowest
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'inst_pres_height_lowest'
     AtmFieldsToExport(ii)%field_name    = 'Plowest'
     AtmFieldsToExport(ii)%file_varname  = 'pres_hyblev1'
     AtmFieldsToExport(ii)%unit_name     = 'Pa'
-    AtmFieldsToExport(ii)%farrayPtr     => plowest
+    !AtmFieldsToExport(ii)%farrayPtr     => plowest
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
   !-----------------------------------------------------------------------------
   !
@@ -133,21 +141,24 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Dswrf'
     AtmFieldsToExport(ii)%file_varname  = 'DSWRF'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => dswrf
+    !AtmFieldsToExport(ii)%farrayPtr     => dswrf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_down_lw_flx'
     AtmFieldsToExport(ii)%field_name    = 'Dlwrf'
     AtmFieldsToExport(ii)%file_varname  = 'DLWRF'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => dlwrf
+    !AtmFieldsToExport(ii)%farrayPtr     => dlwrf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_up_lw_flx'
     AtmFieldsToExport(ii)%field_name    = 'Ulwrf'
     AtmFieldsToExport(ii)%file_varname  = 'ULWRF'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => ulwrf
+    !AtmFieldsToExport(ii)%farrayPtr     => ulwrf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ! DLWRF-ULWRF
     ii = ii + 1
@@ -155,7 +166,8 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Nlwrf'
     AtmFieldsToExport(ii)%file_varname  = 'NLWRF'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => nlwrf
+    !AtmFieldsToExport(ii)%farrayPtr     => nlwrf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
   !-----------------------------------------------------------------------------
   !
@@ -166,14 +178,16 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Shtfl'
     AtmFieldsToExport(ii)%file_varname  = 'shtfl_ave'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => shtfl
+    !AtmFieldsToExport(ii)%farrayPtr     => shtfl
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_laten_heat_flx'
     AtmFieldsToExport(ii)%field_name    = 'Lhtfl'
     AtmFieldsToExport(ii)%file_varname  = 'lhtfl_ave'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => lhtfl
+    !AtmFieldsToExport(ii)%farrayPtr     => lhtfl
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
   !-----------------------------------------------------------------------------
   !
@@ -184,28 +198,32 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Vbdsf'
     AtmFieldsToExport(ii)%file_varname  = 'vbdsf_ave'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => vbdsf
+    !AtmFieldsToExport(ii)%farrayPtr     => vbdsf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_down_sw_vis_dif_flx'
     AtmFieldsToExport(ii)%field_name    = 'Vddsf'
     AtmFieldsToExport(ii)%file_varname  = 'vddsf_ave'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => vddsf
+    !AtmFieldsToExport(ii)%farrayPtr     => vddsf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_down_sw_ir_dir_flx'
     AtmFieldsToExport(ii)%field_name    = 'Nbdsf'
     AtmFieldsToExport(ii)%file_varname  = 'nbdsf_ave'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => nbdsf
+    !AtmFieldsToExport(ii)%farrayPtr     => nbdsf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
     
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_down_sw_ir_dif_flx'
     AtmFieldsToExport(ii)%field_name    = 'Nddsf'
     AtmFieldsToExport(ii)%file_varname  = 'nddsf_ave'
     AtmFieldsToExport(ii)%unit_name     = 'W/m2'
-    AtmFieldsToExport(ii)%farrayPtr     => nddsf
+    !AtmFieldsToExport(ii)%farrayPtr     => nddsf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
   !-----------------------------------------------------------------------------
   !
@@ -216,21 +234,24 @@ module AtmExportFields
     AtmFieldsToExport(ii)%field_name    = 'Psurf'
     AtmFieldsToExport(ii)%file_varname  = 'psurf'
     AtmFieldsToExport(ii)%unit_name     = 'Pa'
-    AtmFieldsToExport(ii)%farrayPtr     => psurf
+    !AtmFieldsToExport(ii)%farrayPtr     => psurf
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_prec_rate'
     AtmFieldsToExport(ii)%field_name    = 'Prate'
     AtmFieldsToExport(ii)%file_varname  = 'precp'
     AtmFieldsToExport(ii)%unit_name     = 'kg/m2/s'
-    AtmFieldsToExport(ii)%farrayPtr     => prate
+    !AtmFieldsToExport(ii)%farrayPtr     => prate
+    AtmFieldsToExport(ii)%farrayPtr     => null()
 
     ii = ii + 1
     AtmFieldsToExport(ii)%standard_name = 'mean_fprec_rate'
     AtmFieldsToExport(ii)%field_name    = 'Snwrate'
     AtmFieldsToExport(ii)%file_varname  = 'fprecp'
     AtmFieldsToExport(ii)%unit_name     = 'kg/m2/s'
-    AtmFieldsToExport(ii)%farrayPtr     => snwrate
+    !AtmFieldsToExport(ii)%farrayPtr     => snwrate
+    AtmFieldsToExport(ii)%farrayPtr     => null()
   
   !-----------------------------------------------------------------------------
   ! check

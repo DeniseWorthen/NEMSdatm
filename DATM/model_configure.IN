@@ -2,7 +2,7 @@ cdate0: 2011100100
 
 nfhout: 6
 #filename_base: cfsr.
-#iatm: 1770
+#iatm: 1760
 #jatm:  880
 
 filename_base: gefs.

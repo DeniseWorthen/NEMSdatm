@@ -1328,9 +1328,9 @@ module driver
 
     ! set the model clock
     !call ESMF_TimeIntervalSet(timeStep, h=1, rc=rc) ! 1 hour steps
-    !call ESMF_TimeIntervalSet(timeStep, s=3600, rc=rc) ! 30 min steps
+    call ESMF_TimeIntervalSet(timeStep, s=3600, rc=rc) ! 30 min steps
     !call ESMF_TimeIntervalSet(timeStep, s=1800, rc=rc) ! 30 min steps
-    call ESMF_TimeIntervalSet(timeStep, s=900, rc=rc) ! 15 min steps
+    !call ESMF_TimeIntervalSet(timeStep, s=900, rc=rc) ! 15 min steps
     !call ESMF_TimeIntervalSet(timeStep, s=450, rc=rc) ! 7.5 min steps
     if (ChkErr(rc,__LINE__,u_FILE_u)) return
     call ESMF_TimeSet(startTime, yy=2011, mm=10, dd=1, h=0, m=0, &

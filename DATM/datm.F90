@@ -18,11 +18,12 @@ module DAtm
   use AtmFieldUtils,     only : AtmFieldsAdvertise, AtmFieldsRealize
   use AtmFieldUtils,     only : AtmFieldDump
   use AtmFieldUtils,     only : AtmFieldCheck
+  use AtmGridUtils,      only : WriteCoord, WriteMask
 
   ! AtmInit called by InitializeP2, AtmRun called by ModelAdvance
   use AtmModel,          only : AtmInit, AtmRun, AtmFinal
 
-  use AtmInternalFields, only : ChkErr
+  use AtmInternalFields, only : AtmIndexType, ChkErr
   use AtmInternalFields, only : lPet, petCnt, dt_atmos, iatm, jatm, nfhout
   use AtmInternalFields, only : dirpath, cdate0, filename_base
 
@@ -271,6 +272,7 @@ module DAtm
     type(ESMF_Grid)         :: gridOut
     type(ESMF_Field)        :: field
     character(ESMF_MAXSTR)  :: msgString
+    character(ESMF_MAXSTR)  :: fname
 
     integer :: ii, nfields
 
@@ -291,8 +293,24 @@ module DAtm
          unit=msgString)
     call ESMF_LogWrite(msgString, ESMF_LOGMSG_INFO)
 
-    call AtmGridSetUp(gridIn,petCnt,'Atm grid','InitP2 Atm',rc)
+    fname = trim(dirpath)//trim(filename_base)//'SCRIP.nc'
+    call ESMF_LogWrite('reading grid file '//trim(fname), ESMF_LOGMSG_INFO)
+
+    gridIn = ESMF_GridCreate(filename=trim(fname),&
+                             fileformat = ESMF_FILEFORMAT_SCRIP, &
+                             addCornerStagger=.true., &
+                             indexflag=AtmIndexType, &
+                             addMask=.true.,rc=rc)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
     gridOut = gridIn ! for now out same as in
+
+    ! Write coords and mask to file
+    call WriteCoord(gridIn, ESMF_STAGGERLOC_CENTER, 1, 'atmlonc', lPet, rc)
+    call WriteCoord(gridIn, ESMF_STAGGERLOC_CENTER, 2, 'atmlatc', lPet, rc)
+    call WriteCoord(gridIn, ESMF_STAGGERLOC_CORNER, 1, 'atmlonq', lPet, rc)
+    call WriteCoord(gridIn, ESMF_STAGGERLOC_CORNER, 2, 'atmlatq', lPet, rc)
+
+    call WriteMask(gridIn, ESMF_STAGGERLOC_CENTER, 'atmmask', lPet, rc)
 
     call AtmFieldsRealize(exportState, gridOut, AtmFieldsToExport, 'Atm Export', rc)
     if (ChkErr(rc,__LINE__,u_FILE_u)) return

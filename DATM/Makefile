@@ -43,20 +43,20 @@ include $(ESMFMKFILE)
 
 
 # -----------------------------------------------------------------------------
-esmApp: esmApp.o Driver.o datm.o AtmInternalFields.o AtmExportFields.o AtmFieldUtils.o AtmGridUtils.o AtmForce.o AtmGridSetUp.o AtmModel.o LocalDefs.o AtmBundleCreate.o
+esmApp: esmApp.o Driver.o datm.o AtmInternalFields.o AtmExportFields.o AtmFieldUtils.o AtmGridUtils.o AtmForce.o AtmModel.o LocalDefs.o AtmBundleCreate.o
 	$(ESMF_F90LINKER) $(ESMF_F90LINKOPTS) $(ESMF_F90LINKPATHS) $(ESMF_F90LINKRPATHS) -o $@ $^ $(ESMF_F90ESMFLINKLIBS)
 
 # module dependencies:
 esmApp.o: Driver.o
 Driver.o: datm.o 
 
-datm.o: AtmExportFields.o AtmModel.o AtmFieldUtils.o AtmGridSetUp.o
+datm.o: AtmExportFields.o AtmModel.o AtmFieldUtils.o AtmGridUtils.o 
 AtmModel.o: AtmForce.o AtmBundleCreate.o AtmFieldUtils.o 
 AtmForce.o: AtmExportFields.o
-AtmGridSetUp.o: AtmExportFields.o AtmGridUtils.o
 AtmBundleCreate.o : AtmInternalFields.o
 AtmFieldUtils.o : AtmInternalFields.o AtmExportFields.o
 AtmExportFields.o : AtmInternalFields.o
+AtmGridUtils.o : AtmGridUtils.o
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 .PHONY: dust clean distclean info edit
