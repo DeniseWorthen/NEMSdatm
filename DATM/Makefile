@@ -62,7 +62,7 @@ AtmGridUtils.o : AtmGridUtils.o
 dust:
 	rm -f PET*.ESMF_LogFile *.nc
 clean:
-	rm -f esmApp *.o *.mod PET*_LogFile *.nc
+	rm -f datm.mk libdatm.a esmApp *.o *.mod PET*_LogFile *.nc
 distclean: dust clean
 
 info:
